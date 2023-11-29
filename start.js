@@ -4,6 +4,7 @@ const device = require('ocore/device.js');
 const network = require('ocore/network.js');
 const headlessWallet = require('headless-obyte');
 const db = require('./db/index.js');
+const { EmbedBuilder } = require('discord.js');
 
 const discordInstance = require('./discordInstance');
 const { isValidAddress } = require('ocore/validation_utils');
@@ -158,6 +159,21 @@ eventBus.once('headless_wallet_ready', () => {
             await addDonor(wallet, nick, role.id, user.id);
 
             device.sendMessageToDevice(from_address, 'text', texts.UPDATED);
+
+            if (process.env.CHANNEL_ID) {
+              try {
+                const channel = await discordInstance.channels.fetch(process.env.CHANNEL_ID);
+                const embed = new EmbedBuilder()
+                  .setTitle(`${user.globalName} became the “${role.name}”`)
+                  .setDescription(`You can get this role too. If you already donated you can send your address to the ${conf.deviceName} and get it or you may [Donate now](https://kivach.org).`)
+                  .setAuthor({ name: "Kivach roles bot", url: "https://kivach.org" })
+                  .setColor(role.color);
+
+                await channel.send({ embeds: [embed] });
+              } catch (e) {
+                console.error("Can't send message to channel", e)
+              }
+            }
           } catch (e) {
             console.log("Can't add role", e);
           }
