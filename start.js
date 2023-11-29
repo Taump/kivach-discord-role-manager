@@ -14,13 +14,14 @@ const { addDonor, getNickDataByWallet, removeDonor } = require('./db/api.js');
 const sessions = {} // device_address: { wallet: 'ADDRESS', signed: bool, role: roleObject from conf.js }
 
 const texts = {
+  GREETING: "Welcome to Kivach discord bot. Here you can link your discord nickname to your Obyte address and have your status displayed on Discord depending on the total amount of your donations.\n\n",
   INSERT_ADDRESS: "Please insert your donor address (click ... and \"Insert my address\")",
-  NOT_FOUND_ADDRESS: "Sorry we can't find your address in kivach donors database. Please try again.",
+  NOT_FOUND_ADDRESS: "Can't find your address in the Kivach donors database. Please try again.",
   SEND_NICK: "Please send your discord nick (in Obyte server)",
   LAST_NICK: (nick) => `Your last discord nick was ${nick}. We will remove it.`,
   ALREADY_HAVE_STATUS: "You already have this status.",
   UPDATED: "Your discord status has been updated.",
-  NOT_FOUND_NICK: "We could not find your discord nick (in Obyte server). Please try again.",
+  NOT_FOUND_NICK: "No such discord nick (in Obyte server). Please try again.",
   SIGN_MESSAGE: (wallet) => `[${wallet}](sign-message-request: I own the address ${wallet})`,
   SIGN_MESSAGE_ERROR: "Please sign the message to prove that you own the address.",
 }
@@ -33,7 +34,7 @@ eventBus.once('headless_wallet_ready', () => {
   });
 
   eventBus.on('paired', (from_address) => {
-    device.sendMessageToDevice(from_address, 'text', texts.INSERT_ADDRESS);
+    device.sendMessageToDevice(from_address, 'text', texts.GREETING + texts.INSERT_ADDRESS);
   });
 
   // a. User send address
