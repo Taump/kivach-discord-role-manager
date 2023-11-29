@@ -34,7 +34,7 @@ eventBus.once('headless_wallet_ready', () => {
     if (isValidAddress(trimmedData)) {
       wallet = trimmedData;
       const role = await getRoleByWalletAddress(wallet);
-      
+
       sessions[from_address] = { wallet, role, signed: false };
 
       if (role) {
@@ -83,7 +83,7 @@ eventBus.once('headless_wallet_ready', () => {
         const user = membersData.find(({ username }) => username.toLowerCase() === nick.toLowerCase());
 
         const lastNickData = await getNickDataByWallet(wallet);
-        
+
         if (lastNickData && user) {
           device.sendMessageToDevice(from_address, 'text', `Your last discord nick was ${lastNickData.nick_name}. We will remove it.`);
 
@@ -91,7 +91,9 @@ eventBus.once('headless_wallet_ready', () => {
 
             const lastMemberData = membersData.find(({ username }) => username.toLowerCase() === lastNickData.nick_name.toLowerCase());
 
-            if (lastMemberData) {
+            if (lastMemberData && lastMemberData.id === user.id) {
+              device.sendMessageToDevice(from_address, 'text', 'You already have this status.');
+            } else if (lastMemberData) {
               const guild = await discordInstance.guilds.fetch(conf.SERVER_ID);
 
               const role = await guild.roles.fetch(lastNickData.role_id);
@@ -139,5 +141,5 @@ eventBus.once('headless_wallet_ready', () => {
 
 
 async function start() {
-  await db.create();
+  await db.create(); // create db if not exists
 }
