@@ -8,6 +8,7 @@ exports.create = async function () {
     donor CHAR(32) NOT NULL,
     nick_name CHAR(32) NOT NULL,
     role_id CHAR(32) NOT NULL,
+    user_id CHAR(32) NOT NULL,
     UNIQUE(donor)
   )`);
 }
