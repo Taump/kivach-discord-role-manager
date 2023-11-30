@@ -4,14 +4,17 @@ const device = require('ocore/device.js');
 const network = require('ocore/network.js');
 const headlessWallet = require('headless-obyte');
 const db = require('./db/index.js');
-const { EmbedBuilder } = require('discord.js');
 
 const discordInstance = require('./discordInstance');
 const { isValidAddress } = require('ocore/validation_utils');
 const { getRoleByWalletAddress } = require('./utils/getRoleByWalletAddress.js');
+const { sendToChannel } = require('./utils/sendToChannel.js');
 const { addDonor, getNickDataByWallet, removeDonor } = require('./db/api.js');
+const { checkAndUpdateStatus } = require('./checkStatus.js');
 
 const sessions = {} // device_address: { wallet: 'ADDRESS', signed: bool, role: roleObject from conf.js }
+
+const CHECK_INTERVAL = 1000 * 60 * 60 * 4; // 4 hours
 
 const texts = {
   GREETING: "Welcome to Kivach discord bot. Here you can link your discord nickname to your Obyte address and have your status displayed on Discord depending on the total amount of your donations.\n\n",
@@ -20,7 +23,7 @@ const texts = {
   SEND_NICK: "Please send your discord nick (in Obyte server)",
   LAST_NICK: (nick) => `Your last discord nick was ${nick}. We will remove it.`,
   ALREADY_HAVE_STATUS: "You already have this status.",
-  UPDATED: "Your discord status has been updated.",
+  UPDATED: (roleName) => `Your new discord status: ${roleName}`,
   NOT_FOUND_NICK: "No such discord nick (in Obyte server). Please try again.",
   SIGN_MESSAGE: (wallet) => `[${wallet}](sign-message-request: I own the address ${wallet})`,
   SIGN_MESSAGE_ERROR: "Please sign the message to prove that you own the address.",
@@ -115,8 +118,6 @@ eventBus.once('headless_wallet_ready', () => {
         // user data (from discord api) by nickname
         const user = membersData.find(({ username }) => username.toLowerCase() === nick.toLowerCase());
 
-
-
         if (user) {
           const lastNickData = await getNickDataByWallet(wallet);
 
@@ -157,24 +158,12 @@ eventBus.once('headless_wallet_ready', () => {
 
             await member.roles.add(role);
 
-            await addDonor(wallet, nick, role.id, user.id);
+            await addDonor(wallet, nick, role.id, user.id, from_address);
 
-            device.sendMessageToDevice(from_address, 'text', texts.UPDATED);
+            device.sendMessageToDevice(from_address, 'text', texts.UPDATED(role.name));
 
-            if (process.env.CHANNEL_ID) {
-              try {
-                const channel = await discordInstance.channels.fetch(process.env.CHANNEL_ID);
-                const embed = new EmbedBuilder()
-                  .setTitle(`${user.globalName} became the “${role.name}”`)
-                  .setDescription(`You can get this role too. If you already donated you can send your address to the ${conf.deviceName} and get it or you may [Donate now](https://kivach.org).`)
-                  .setAuthor({ name: "Kivach roles bot", url: "https://kivach.org" })
-                  .setColor(role.color);
+            await sendToChannel(user.globalName || user.username, role);
 
-                await channel.send({ embeds: [embed] });
-              } catch (e) {
-                console.error("Can't send message to channel", e)
-              }
-            }
           } catch (e) {
             console.log("Can't add role", e);
           }
@@ -192,10 +181,10 @@ eventBus.once('headless_wallet_ready', () => {
   });
 });
 
-
-
 async function start() {
   await discordInstance.login(conf.BOT_TOKEN);
 
   await db.create(); // create db if not exists
+
+  setInterval(checkAndUpdateStatus, CHECK_INTERVAL);
 }
