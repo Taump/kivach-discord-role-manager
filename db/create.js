@@ -6,6 +6,7 @@ exports.create = async function () {
 
   await db.query(`CREATE TABLE IF NOT EXISTS ${conf.prefix}_donors (
     donor CHAR(32) NOT NULL,
+    device_address CHAR(32) NOT NULL,
     nick_name CHAR(32) NOT NULL,
     role_id CHAR(32) NOT NULL,
     user_id CHAR(32) NOT NULL,
