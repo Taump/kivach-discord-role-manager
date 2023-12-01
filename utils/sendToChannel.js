@@ -9,7 +9,7 @@ async function sendToChannel(userGlobalName, role) {
       const channel = await discordInstance.channels.fetch(process.env.CHANNEL_ID);
 
       const embed = new EmbedBuilder()
-        .setTitle(`${userGlobalName} became the “${role.name}”`)
+        .setTitle(`${userGlobalName} is now “${role.name}”`)
         .setDescription(`You can get this role too. If you already donated you can send your address to the ${conf.deviceName} and get it or you may [Donate now](https://kivach.org).`)
         .setAuthor({ name: "Kivach roles bot", url: "https://kivach.org" })
         .setColor(role.color);
