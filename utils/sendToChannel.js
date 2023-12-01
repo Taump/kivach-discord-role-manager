@@ -8,11 +8,16 @@ async function sendToChannel(userGlobalName, role) {
     try {
       const channel = await discordInstance.channels.fetch(process.env.CHANNEL_ID);
 
+      const roleFields = conf.discordRoles.sort((a, b) => a.minimum_usd_donation - b.minimum_usd_donation).map(role => ({
+        name: role.name, value: `Min. $${role.minimum_usd_donation}`, inline: false
+      }));
+
       const embed = new EmbedBuilder()
         .setTitle(`${userGlobalName} is now “${role.name}”`)
         .setDescription(`You can get this role too. If you already donated you can send your address to the ${conf.deviceName} and get it or you may [Donate now](https://kivach.org).`)
         .setAuthor({ name: "Kivach roles bot", url: "https://kivach.org" })
-        .setColor(role.color);
+        .setColor(role.color)
+        .setFields(roleFields);
 
       await channel.send({ embeds: [embed] });
     } catch (e) {
