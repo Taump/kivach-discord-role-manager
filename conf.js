@@ -35,6 +35,12 @@ exports.discordRoles = [
     id: undefined // "1176143103678238730" // please add this 
   },
   {
+    name: "Bronze Kivach donor",
+    minimum_usd_donation: 50,
+    color: 14474721,
+    id: undefined //"1176143102617067550" // please add this 
+  },
+  {
     name: "Silver Kivach donor",
     minimum_usd_donation: 200,
     color: 14474721,
@@ -42,7 +48,7 @@ exports.discordRoles = [
   },
   {
     name: "Gold Kivach donor",
-    minimum_usd_donation: 500,
+    minimum_usd_donation: 1000,
     color: 16500017,
     id: undefined //"1176143100947734538" // please add this 
   }
