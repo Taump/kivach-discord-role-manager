@@ -21,11 +21,11 @@ const texts = {
   INSERT_ADDRESS: "Please insert your donor address (click ... and \"Insert my address\")",
   NOT_FOUND_ADDRESS: "Can't find your address in the Kivach donors database. Please try again.",
   SEND_NICK: "Please send your discord nick (in Obyte server)",
-  LAST_NICK: (nick) => `Your last discord nick was ${nick}. We will remove it.`,
+  LAST_NICK: (nick) => `Your previous discord nick was ${nick}. We will remove it.`,
   ALREADY_HAVE_STATUS: "You already have this status.",
   UPDATED: (roleName) => `Your new discord status: ${roleName}`,
   NOT_FOUND_NICK: "No such discord nick (in Obyte server). Please try again.",
-  SIGN_MESSAGE: (wallet) => `[${wallet}](sign-message-request: I own the address ${wallet})`,
+  SIGN_MESSAGE: (wallet) => `Please sign this message to prove that you own the address: [${wallet}](sign-message-request: I own the address ${wallet})`,
   SIGN_MESSAGE_ERROR: "Please sign the message to prove that you own the address.",
 }
 
