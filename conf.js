@@ -24,6 +24,7 @@ exports.SERVER_ID = process.env.SERVER_ID;
 exports.BOT_TOKEN = process.env.BOT_TOKEN;
 
 exports.kivach_backend_api_url = "https://kivach.org/api";
+exports.kivach_invite_to_bot_url = "https://cascading-donations-v2.vercel.app/api/bot";
 exports.prefix = "DISCORD_ROLES";
 
 // hex to decimals color converter: https://www.mathsisfun.com/hexadecimal-decimal-colors.html

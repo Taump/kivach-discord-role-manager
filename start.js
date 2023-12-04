@@ -177,6 +177,8 @@ eventBus.once('headless_wallet_ready', () => {
       } else {
         device.sendMessageToDevice(from_address, 'text', texts.INSERT_ADDRESS);
       }
+    } else {
+      device.sendMessageToDevice(from_address, 'text', texts.INSERT_ADDRESS);
     }
   });
 });

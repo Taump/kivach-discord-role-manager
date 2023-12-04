@@ -14,7 +14,7 @@ async function sendToChannel(userGlobalName, role) {
 
       const embed = new EmbedBuilder()
         .setTitle(`${userGlobalName} is now “${role.name}”`)
-        .setDescription(`You can get this role too. If you already donated you can send your address to the ${conf.deviceName} and get it or you may [Donate now](https://kivach.org).`)
+        .setDescription(`You can get this role too. If you already donated you can send your address to [the ${conf.deviceName}](${conf.kivach_invite_to_bot_url}) and get it or you may [Donate now](https://kivach.org).`)
         .setAuthor({ name: "Kivach roles bot", url: "https://kivach.org" })
         .setColor(role.color)
         .setFields(roleFields);
