@@ -32,25 +32,25 @@ exports.discordRoles = [
   {
     name: "Kivach donor",
     minimum_usd_donation: 0.1,
-    color: 6540762, // #63cdda
+    color: 0x63cdda,
     id: undefined // "1176143103678238730" // please add this 
   },
   {
     name: "Kivach piranha donor",
     minimum_usd_donation: 50,
-    color: 4571890, // #45C2F2
+    color: 0x45C2F2,
     id: undefined //"1176143102617067550" // please add this 
   },
   {
     name: "Kivach shark donor",
     minimum_usd_donation: 200,
-    color: 2988250, // #2D98DA
+    color: 0x2D98DA,
     id: undefined //"1176143102617067550" // please add this 
   },
   {
     name: "Kivach whale donor",
     minimum_usd_donation: 1000,
-    color: 4946924, // #4b7bec
+    color: 0x4b7bec,
     id: undefined //"1176143100947734538" // please add this 
   }
 ]
