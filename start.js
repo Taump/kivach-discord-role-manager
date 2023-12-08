@@ -17,7 +17,7 @@ const sessions = {} // device_address: { wallet: 'ADDRESS', signed: bool, role: 
 const CHECK_INTERVAL = 1000 * 60 * 60 * 4; // 4 hours
 
 const texts = {
-  GREETING: `Welcome to Kivach discord bot. Here you can link your discord nickname to your Obyte address and have your status displayed on Discord depending on the total amount of your donations.\n \n List of status \n${conf.discordRoles.sort((a, b) => a.minimum_usd_donation - b.minimum_usd_donation).map(({ name, minimum_usd_donation }) => `${name} - min. $${minimum_usd_donation}`).join('\n')} \n\n`,
+  GREETING: `Welcome to Kivach discord bot. Here you can link your discord nickname to your Obyte address and have your status displayed on Discord depending on the total amount of your donations.\n\nStatuses:\n${conf.discordRoles.sort((a, b) => a.minimum_usd_donation - b.minimum_usd_donation).map(({ name, minimum_usd_donation }) => `${name} - min. $${minimum_usd_donation}`).join('\n')} \n\n`,
   INSERT_ADDRESS: "Please insert your donor address (click ... and \"Insert my address\")",
   NOT_FOUND_ADDRESS: "Can't find your address in the Kivach donors database. Please try again.",
   SEND_NICK: "Please send your discord nick (in Obyte server)",
