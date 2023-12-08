@@ -1,0 +1,1 @@
+*/20 * * * * cd kivach-discord-role-manager; node check_daemon.js 1>>~/.config/kivach-discord-role-manager/check_daemon.log 2>>~/.config/kivach-discord-role-manager/check_daemon.err
