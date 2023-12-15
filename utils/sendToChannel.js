@@ -13,7 +13,7 @@ async function sendToChannel(userGlobalName, role) {
       }));
 
       const embed = new EmbedBuilder()
-        .setTitle(`${userGlobalName} is now “${role.name}”`)
+        .setTitle(`@${userGlobalName} is now “${role.name}”`)
         .setDescription(`You can get a similar role in this Discord server too. If you have already donated at least $0.10, talk to [${conf.deviceName}](${conf.kivach_invite_to_bot_url}) to link your Obyte adddress to your Discord username. Otherwise, [Donate](https://kivach.org) to a project of your choice first.`)
         .setAuthor({ name: "Kivach", url: "https://kivach.org" })
         .setColor(role.color)
